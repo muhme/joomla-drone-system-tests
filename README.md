@@ -21,8 +21,8 @@ scripts/create.sh
 |Name               |Port                                 |Comment                                    |
 |-------------------|-------------------------------------|-------------------------------------------|
 |mysql              |                                     |                                           |
-|phpmin-system-mysql|[1080](http://localhost:1080)        | user ci-admin / password: joomla-17082005<br />(see www/cypress.config.js) |
-|mysqladmin         |[1081](http://localhost:1080/cmysql/)| user joomla_ut / password joomla_ut       |
+|phpmin-system-mysql|[1080](http://localhost:1080/cmysql/)        | user ci-admin / password: joomla-17082005<br />(see www/cypress.config.js) |
+|mysqladmin         |[1081](http://localhost:1081/)| user joomla_ut / password joomla_ut       |
 
 ## Tests
 
