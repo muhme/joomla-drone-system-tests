@@ -31,7 +31,7 @@ Running the complete system test suite:
 scripts/tests.sh
 ```
 
-Running one test specification from system test by example:
+Running one system test specification by example:
 ```
 scripts/test.sh tests/System/integration/site/components/com_contact/Categories.cy.js
 ```
@@ -42,9 +42,9 @@ The bash scripts are for macOS, Linux or Windows WSL 2:
 
 | Script | Description | Additional Info |
 | --- | --- | --- |
-| `scripts/create.sh` | Create the three Docker containers |  |
-| `scripts/test.sh` | Running system test | without argument all system tests or give one test specification as argument |
-| `scripts/clean.sh` | Removes docker compose containers | with argument `all` also folders `cypress-cache` and `www` and also docker compose volumes, images and networks |
+| [scripts/create.sh](scripts/create.sh) | Create the three Docker containers | and running `composer update` and `npm ci` |
+| [scripts/test.sh](scripts/test.sh) | Running system test | without argument all system tests or give one test specification as argument |
+| [scripts/clean.sh](scripts/clean.sh) | Removes docker compose containers | with argument `all` also folders `cypress-cache` and `www` and also docker compose volumes, images and networks |
 
 ## License
 
