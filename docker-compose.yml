@@ -1,0 +1,63 @@
+# docker-compose.yml
+#
+# MIT License, Copyright (c) 2024 Heiko Lübbe
+# https://github.com/muhme/joomla-drone-system-tests
+
+# you have to fill folder 'www' before, e.g.
+# git clone --depth 1 https://github.com/joomla/joomla-cms www
+
+services:
+  drone_mysql: 
+    container_name: mysql
+    restart: unless-stopped
+    image: mysql:5.7
+    environment:
+      MYSQL_USER: joomla_ut
+      MYSQL_PASSWORD: joomla_ut
+      MYSQL_ROOT_PASSWORD: joomla_ut
+      MYSQL_DATABASE: test_joomla
+  drone_mysqladmin:
+    container_name: mysqladmin
+    image: phpmyadmin/phpmyadmin
+    environment: 
+      PMA_HOST: mysql
+      PMA_USER: joomla_ut
+      PMA_PASSWORD: joomla_ut
+    ports:
+      - "1081:80"
+    restart: unless-stopped
+    depends_on:
+      - drone_mysql
+# not really needed, do it in phpmin-system-mysql container
+# drone_prepare:
+#   container_name: prepare_system_tests
+#   restart: unless-stopped
+#   image: joomlaprojects/docker-images:systemtests
+#   volumes:
+#     - ./cypress-cache:/root/.cache/Cypress
+#     - ./www:/root/www
+#   environment:
+#     CYPRESS_VERIFY_TIMEOUT: 100000
+#   # cd /root/www
+#   # mv cypress.config.dist.js cypress.config.js
+#   # composer update
+#   # npm cache clean --force
+#   # npm install
+#   # npm ci
+#   # npx cypress install
+#   # npx cypress verify
+  drone_system_test:
+    # running apache2
+    # having php 7.2
+    container_name: phpmin-system-mysql
+    depends_on:
+      - drone_mysql
+    # see https://github.com/joomla-projects/docker-images/blob/cypress/Dockerfile
+    image: joomlaprojects/docker-images:cypress
+    volumes:
+      - ./cypress-cache:/root/.cache/Cypress
+      - ./www:/root/www
+    ports:
+      - 1080:80
+    environment:
+      JOOMLA_INSTALLATION_DISABLE_LOCALHOST_CHECK: 1
