@@ -12,7 +12,10 @@ docker compose up -d
 # Use 'n lts' to upgrade node from v16 to v20, otherwise 'npm ci' will fail
 docker exec -it phpmin-system-mysql bash -c " \
 cd /root/www && \
-cp cypress.config.dist.js cypress.config.js ; \
+([ -f cypress.config.dist.js ] && \
+  cp cypress.config.dist.js cypress.config.js || \
+  ([ -f cypress.config.dist.mjs ] && \
+    cp cypress.config.dist.mjs cypress.config.mjs)) && \
 npm install -g n && \
 n lts && \
 composer update && \
